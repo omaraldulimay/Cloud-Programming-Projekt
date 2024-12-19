@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-north-1a"
+  region = "eu-north-1"
 }
 
 data "aws_s3_bucket" "existing_bucket" {
