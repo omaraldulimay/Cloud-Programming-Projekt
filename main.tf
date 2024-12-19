@@ -161,4 +161,21 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+# Placeholder for EC2 instance data
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0" # Replace with your AMI ID
+  instance_type = "t2.micro" # Replace with your instance type
 
+  tags = {
+    Name = "ExampleInstance"
+  }
+}
+
+# Placeholder for S3 bucket data
+resource "aws_s3_bucket" "new_bucket" {
+  bucket = "my-new-bucket" # Replace with your bucket name
+
+  tags = {
+    Name = "MyNewBucket"
+  }
+}
