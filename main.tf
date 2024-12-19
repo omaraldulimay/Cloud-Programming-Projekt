@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 data "aws_s3_bucket" "existing_bucket" {
-  bucket = "my.iu.bucket"
+  bucket = "myawsbucket061100"
 }
 
 data "aws_iam_policy_document" "bucket_policy" {
@@ -19,7 +19,7 @@ data "aws_iam_policy_document" "bucket_policy" {
 }
 
 data "aws_s3_bucket" "bucket" {
-  bucket = "my.iu.bucket"
+  bucket = "myawsbucket061100"
 }
 
 resource "aws_s3_bucket_public_access_block" "access_block" {
