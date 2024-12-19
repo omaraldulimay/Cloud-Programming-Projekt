@@ -163,19 +163,19 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_policy" {
 
 # Placeholder for EC2 instance data
 resource "aws_instance" "example" {
-  ami           = "ami-PLACEHOLDER" # Replace with your AMI ID
-  instance_type = "t2.micro" # Replace with your instance type
+  ami           = "ami-075449515af5df0d1" # Replace with your AMI ID
+  instance_type = "t3.micro" # Replace with your instance type
 
   tags = {
-    Name = "ExampleInstance"
+    Name = "Mein Webserver061100"
   }
 }
 
 # Placeholder for S3 bucket data
 resource "aws_s3_bucket" "new_bucket" {
-  bucket = "PLACEHOLDER" # Replace with your bucket name
+  bucket = "myawsbucket061100" # Replace with your bucket name
 
   tags = {
-    Name = "MyNewBucket"
+    Name = "none"
   }
 }
