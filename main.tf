@@ -53,7 +53,8 @@ resource "aws_iam_policy" "cloudfront_access_policy" {
       "Effect": "Allow",
       "Action": [
         "cloudfront:GetCloudFrontOriginAccessIdentity",
-        "cloudfront:ListCloudFrontOriginAccessIdentities"
+        "cloudfront:ListCloudFrontOriginAccessIdentities",
+        "cloudfront:CreateCloudFrontOriginAccessIdentity"
       ],
       "Resource": "*"
     }
@@ -62,8 +63,28 @@ resource "aws_iam_policy" "cloudfront_access_policy" {
 EOF
 }
 
+resource "aws_iam_role" "cloudfront_access_role" {
+  name = "cloudfront_access_role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "cloudfront.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "cloudfront_access_policy_attachment" {
-  role       = aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn
+  role       = aws_iam_role.cloudfront_access_role.name
   policy_arn = aws_iam_policy.cloudfront_access_policy.arn
 }
 
