@@ -1,5 +1,7 @@
 provider "aws" {
-  region = "eu-north-1"
+  region     = "eu-north-1"
+  access_key = var.AWS_ACCESS_KEY_ID
+  secret_key = var.AWS_SECRET_ACCESS_KEY
 }
 
 data "aws_s3_bucket" "existing_bucket" {
