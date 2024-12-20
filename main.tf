@@ -1,7 +1,7 @@
 provider "aws" {
   region     = "eu-north-1"
-  access_key = var.AWS_ACCESS_KEY_ID
-  secret_key = var.AWS_SECRET_ACCESS_KEY
+  access_key = "AKIAZPPF7WBPYSUH7PTO"
+  secret_key = "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"
 }
 
 data "aws_s3_bucket" "existing_bucket" {
@@ -44,11 +44,11 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
-    domain_name = data.aws_s3_bucket.existing_bucket.bucket_regional_domain_name
-    origin_id   = "S3Origin"
+    domain_name = "myawsbucket061100.s3.amazonaws.com" 
+    origin_id   = "myawsbucket061100"
 
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
+      origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
     }
   }
 
