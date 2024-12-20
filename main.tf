@@ -88,10 +88,10 @@ resource "aws_iam_role_policy_attachment" "cloudfront_access_policy_attachment" 
   policy_arn = aws_iam_policy.cloudfront_access_policy.arn
 }
 
-resource "aws_cloudfront_distribution" "s3_distribution" {
+resource "aws_cloudfront_distribution" "EHCWG4KQWLI44" {
   origin {
-    domain_name = "myawsbucket061100.s3.amazonaws.com" 
-    origin_id   = "myawsbucket061100"
+    domain_name = "myawsbucket061100.s3.eu-north-1.amazonaws.com" 
+    origin_id   = "S3-myawsbucket061100"
 
     s3_origin_config {
       origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
