@@ -42,6 +42,31 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "origin access identity for my bucket"
 }
 
+resource "aws_iam_policy" "cloudfront_access_policy" {
+  name        = "cloudfront-access-policy"
+  description = "Policy to allow access to CloudFront Origin Access Identity"
+  policy      = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cloudfront:GetCloudFrontOriginAccessIdentity",
+        "cloudfront:ListCloudFrontOriginAccessIdentities"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "cloudfront_access_policy_attachment" {
+  role       = aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn
+  policy_arn = aws_iam_policy.cloudfront_access_policy.arn
+}
+
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = "myawsbucket061100.s3.amazonaws.com" 
