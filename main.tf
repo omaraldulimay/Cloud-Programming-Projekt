@@ -107,7 +107,7 @@ resource "aws_cloudfront_distribution" "EHCWG4KQWLI44" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3Origin"
+    target_origin_id = "myawsbucket061100"
 
     forwarded_values {
       query_string = false
