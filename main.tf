@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "bucket_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["*"]
+      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E3AFN5HFN77JOC"]
     }
   }
 }
@@ -88,13 +88,15 @@ resource "aws_iam_role_policy_attachment" "cloudfront_access_policy_attachment" 
   policy_arn = aws_iam_policy.cloudfront_access_policy.arn
 }
 
-resource "aws_cloudfront_distribution" "s3_distribution" {
+resource "aws_cloudfront_distribution" "EHCWG4KQWLI44" {
   origin {
+
     domain_name = "myawsbucket061100.s3.amazonaws.com" 
     origin_id   = "S3Origin"
 
+
     s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
+      origin_access_identity = "origin-access-identity/cloudfront/E3AFN5HFN77JOC"
     }
   }
 
@@ -220,10 +222,10 @@ resource "aws_instance" "example" {
 }
 
 # Placeholder for S3 bucket data
-resource "aws_s3_bucket" "new_bucket" {
-  bucket = "myawsbucket061100" # Replace with your bucket name
+# resource "aws_s3_bucket" "new_bucket" {
+ # bucket = "myawsbucket061100" # Replace with your bucket name
 
-  tags = {
-    Name = "none"
-  }
-}
+ # tags = {
+   # Name = "none"
+ # }
+# }
