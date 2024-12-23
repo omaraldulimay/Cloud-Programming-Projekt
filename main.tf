@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "bucket_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["*"]
+      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E3AFN5HFN77JOC"]
     }
   }
 }
@@ -220,10 +220,10 @@ resource "aws_instance" "example" {
 }
 
 # Placeholder for S3 bucket data
-resource "aws_s3_bucket" "new_bucket" {
-  bucket = "myawsbucket061100" # Replace with your bucket name
+# resource "aws_s3_bucket" "new_bucket" {
+ # bucket = "myawsbucket061100" # Replace with your bucket name
 
-  tags = {
-    Name = "none"
-  }
-}
+ # tags = {
+   # Name = "none"
+ # }
+# }
