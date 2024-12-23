@@ -94,7 +94,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id   = "S3Origin"
 
     s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
+      origin_access_identity = "origin-access-identity/cloudfront/E3AFN5HFN77JOC"
     }
   }
 
