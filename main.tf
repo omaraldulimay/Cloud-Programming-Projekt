@@ -94,7 +94,7 @@ resource "aws_cloudfront_distribution" "EHCWG4KQWLI44" {
     origin_id   = "S3-myawsbucket061100"
 
     s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
+      origin_access_identity = "origin-access-identity/cloudfront/E3AFN5HFN77JOC"
     }
   }
 
