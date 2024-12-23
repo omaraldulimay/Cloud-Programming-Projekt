@@ -91,7 +91,7 @@ resource "aws_iam_role_policy_attachment" "cloudfront_access_policy_attachment" 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = "myawsbucket061100.s3.amazonaws.com" 
-    origin_id   = "myawsbucket061100"
+    origin_id   = "S3Origin"
 
     s3_origin_config {
       origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
@@ -107,7 +107,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "myawsbucket061100"
+    target_origin_id = "S3Origin"
 
     forwarded_values {
       query_string = false
