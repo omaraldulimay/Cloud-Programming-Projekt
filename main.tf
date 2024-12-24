@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "bucket_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E3AFN5HFN77JOC"]
+      identifiers = ["*"]
     }
   }
 }
@@ -30,8 +30,6 @@ resource "aws_s3_bucket_public_access_block" "access_block" {
   block_public_acls   = false
   block_public_policy = false
 }
-
-
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = data.aws_s3_bucket.existing_bucket.id
@@ -94,10 +92,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id   = "S3Origin"
 
     s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/E3AFN5HFN77JOC"
+      origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
     }
   }
-
 
   enabled             = true
   is_ipv6_enabled     = true
@@ -209,21 +206,21 @@ resource "aws_iam_role_policy_attachment" "lambda_exec_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Placeholder for EC2 instance data
+# Platzhalter für EC2-Instanzdaten
 resource "aws_instance" "example" {
-  ami           = "ami-075449515af5df0d1" # Replace with your AMI ID
-  instance_type = "t3.micro" # Replace with your instance type
+  ami           = "ami-075449515af5df0d1" # Ersetzen Sie dies durch Ihre AMI-ID
+  instance_type = "t3.micro" # Ersetzen Sie dies durch Ihren Instanztyp
 
   tags = {
     Name = "Mein Webserver061100"
   }
 }
 
-# Placeholder for S3 bucket data
-# resource "aws_s3_bucket" "new_bucket" {
- # bucket = "myawsbucket061100" # Replace with your bucket name
+# Platzhalter für S3-Bucket-Daten
+resource "aws_s3_bucket" "new_bucket" {
+  bucket = "myawsbucket061100" # Ersetzen Sie dies durch Ihren Bucket-Namen
 
- # tags = {
-   # Name = "none"
- # }
-# }
+  tags = {
+    Name = "none"
+  }
+}
