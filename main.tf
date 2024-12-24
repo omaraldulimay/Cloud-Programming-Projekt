@@ -1,13 +1,16 @@
+# Konfiguration des AWS Providers
 provider "aws" {
   region     = "eu-north-1"
   access_key = "AKIAZPPF7WBPYSUH7PTO"
   secret_key = "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"
 }
 
+# Datenquelle für bestehenden S3-Bucket
 data "aws_s3_bucket" "existing_bucket" {
   bucket = "myawsbucket061100"
 }
 
+# IAM-Policydokument für S3-Bucket
 data "aws_iam_policy_document" "bucket_policy" {
   statement {
     actions   = ["s3:GetObject"]
@@ -20,10 +23,12 @@ data "aws_iam_policy_document" "bucket_policy" {
   }
 }
 
+# Datenquelle für S3-Bucket
 data "aws_s3_bucket" "bucket" {
   bucket = "myawsbucket061100"
 }
 
+# Konfiguration für öffentlichen Zugriff auf S3-Bucket blockieren
 resource "aws_s3_bucket_public_access_block" "access_block" {
   bucket = data.aws_s3_bucket.bucket.id
 
@@ -31,15 +36,18 @@ resource "aws_s3_bucket_public_access_block" "access_block" {
   block_public_policy = false
 }
 
+# S3-Bucket-Policy
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = data.aws_s3_bucket.existing_bucket.id
   policy = data.aws_iam_policy_document.bucket_policy.json
 }
 
+# CloudFront Origin Access Identity
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   comment = "origin access identity for my bucket"
 }
 
+# IAM-Policy für CloudFront-Zugriff
 resource "aws_iam_policy" "cloudfront_access_policy" {
   name        = "cloudfront-access-policy"
   description = "Policy to allow access to CloudFront Origin Access Identity"
@@ -61,6 +69,7 @@ resource "aws_iam_policy" "cloudfront_access_policy" {
 EOF
 }
 
+# IAM-Rolle für CloudFront-Zugriff
 resource "aws_iam_role" "cloudfront_access_role" {
   name = "cloudfront_access_role"
 
@@ -81,11 +90,13 @@ resource "aws_iam_role" "cloudfront_access_role" {
 EOF
 }
 
+# Anfügen der IAM-Policy an die CloudFront-Zugriffsrolle
 resource "aws_iam_role_policy_attachment" "cloudfront_access_policy_attachment" {
   role       = aws_iam_role.cloudfront_access_role.name
   policy_arn = aws_iam_policy.cloudfront_access_policy.arn
 }
 
+# CloudFront-Distribution für S3-Bucket
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = "myawsbucket061100.s3.amazonaws.com" 
@@ -133,12 +144,14 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 }
 
+# Archivdatei für Lambda-Funktion
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_file = "index.js"
   output_path = "lambda_function_payload.zip"
 }
 
+# Lambda-Funktion
 resource "aws_lambda_function" "lambda_function" {
   function_name = "my_lambda_function"
   role          = aws_iam_role.lambda_exec.arn
@@ -147,16 +160,19 @@ resource "aws_lambda_function" "lambda_function" {
   filename      = data.archive_file.lambda_zip.output_path
 }
 
+# API Gateway REST API
 resource "aws_api_gateway_rest_api" "api_gateway" {
   name = "my_api_gateway"
 }
 
+# API Gateway-Ressource
 resource "aws_api_gateway_resource" "api_resource" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   parent_id   = aws_api_gateway_rest_api.api_gateway.root_resource_id
   path_part   = "{proxy+}"
 }
 
+# API Gateway-Methode
 resource "aws_api_gateway_method" "api_method" {
   rest_api_id   = aws_api_gateway_rest_api.api_gateway.id
   resource_id   = aws_api_gateway_resource.api_resource.id
@@ -164,6 +180,7 @@ resource "aws_api_gateway_method" "api_method" {
   authorization = "NONE"
 }
 
+# API Gateway-Integration mit Lambda-Funktion
 resource "aws_api_gateway_integration" "lambda_integration" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   resource_id = aws_api_gateway_resource.api_resource.id
@@ -174,6 +191,7 @@ resource "aws_api_gateway_integration" "lambda_integration" {
   uri                     = aws_lambda_function.lambda_function.invoke_arn
 }
 
+# API Gateway-Bereitstellung
 resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.api_gateway.id
   stage_name  = "prod"
@@ -181,6 +199,7 @@ resource "aws_api_gateway_deployment" "api_deployment" {
   depends_on = [aws_api_gateway_integration.lambda_integration]
 }
 
+# IAM-Rolle für Lambda-Ausführung
 resource "aws_iam_role" "lambda_exec" {
   name = "lambda_exec"
 
@@ -201,12 +220,13 @@ resource "aws_iam_role" "lambda_exec" {
 EOF
 }
 
+# Anfügen der IAM-Policy an die Lambda-Ausführungsrolle
 resource "aws_iam_role_policy_attachment" "lambda_exec_policy" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Platzhalter für EC2-Instanzdaten
+# EC2-Instanz
 resource "aws_instance" "example" {
   ami           = "ami-075449515af5df0d1" # Ersetzen Sie dies durch Ihre AMI-ID
   instance_type = "t3.micro" # Ersetzen Sie dies durch Ihren Instanztyp
@@ -216,7 +236,7 @@ resource "aws_instance" "example" {
   }
 }
 
-# Platzhalter für S3-Bucket-Daten
+# S3-Bucket
 resource "aws_s3_bucket" "new_bucket" {
   bucket = "myawsbucket061100" # Ersetzen Sie dies durch Ihren Bucket-Namen
 
