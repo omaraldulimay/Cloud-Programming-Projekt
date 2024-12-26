@@ -28,6 +28,15 @@ data "aws_s3_bucket" "bucket" {
   bucket = "myawsbucket061100"
 }
 
+# S3-Bucket
+resource "aws_s3_bucket" "new_bucket" {
+  bucket = "myawsbucket061100" # Ersetzen Sie dies durch Ihren Bucket-Namen
+
+  tags = {
+    Name = "none"
+  }
+}
+
 # Konfiguration für öffentlichen Zugriff auf S3-Bucket blockieren
 resource "aws_s3_bucket_public_access_block" "access_block" {
   bucket = data.aws_s3_bucket.bucket.id
@@ -103,7 +112,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id   = "S3Origin"
 
     s3_origin_config {
-      origin_access_identity = "origin-access-identity/cloudfront/E37N398QYQ165J"
+      origin_access_identity = "origin-access-identity/cloudfront/E3AFN5HFN77JOC"
     }
   }
 
@@ -154,11 +163,4 @@ resource "aws_instance" "example" {
   }
 }
 
-# S3-Bucket
-resource "aws_s3_bucket" "new_bucket" {
-  bucket = "myawsbucket061100" # Ersetzen Sie dies durch Ihren Bucket-Namen
 
-  tags = {
-    Name = "none"
-  }
-}
