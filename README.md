@@ -47,12 +47,6 @@
 
 7. Nach erfolgreicher Bereitstellung können Sie die erstellten Ressourcen in der AWS Management Console überprüfen.
 
-### Zugriff auf die HTML-Datei über die CloudFront-Domain
-
-1. Nach der Bereitstellung des Projekts wird eine CloudFront-Domain erstellt.
-2. Gehen Sie zur AWS Management Console und navigieren Sie zu "CloudFront" unter "Networking & Content Delivery".
-3. Suchen Sie die erstellte Distribution und kopieren Sie den Domainnamen (z.B. `d1pqr0eof9iean.cloudfront.net`).
-4. Öffnen Sie einen Webbrowser und geben Sie den kopierten Domainnamen ein, um auf die bereitgestellte HTML-Datei zuzugreifen.
 
 ### CloudFront-Distribution erstellen
 
@@ -64,8 +58,7 @@
 6. Konfigurieren Sie die gewünschten Einstellungen für die Verteilung.
 7. Klicken Sie auf "Create Distribution".
 8. Warten Sie, bis der Status der Verteilung auf "Deployed" wechselt.
-9. Kopieren Sie den Domainnamen der erstellten CloudFront-Distribution (z.B. `d1pqr0eof9iean.cloudfront.net`).
-10. Öffnen Sie einen Webbrowser und geben Sie den kopierten Domainnamen ein, um auf die bereitgestellte HTML-Datei zuzugreifen.
+
 
 ### Verknüpfung der HTML-Datei mit dem S3-Bucket
 
@@ -76,3 +69,11 @@
 5. Klicken Sie auf "Upload" und wählen Sie die HTML-Datei (z.B. `index.html`) aus, die Sie hochladen möchten.
 6. Klicken Sie auf "Upload", um die Datei in den S3-Bucket hochzuladen.
 7. Stellen Sie sicher, dass die Datei öffentlich zugänglich ist, indem Sie die Berechtigungen entsprechend konfigurieren.
+
+
+   ### Zugriff auf die HTML-Datei über die CloudFront-Domain
+
+1. Nach der Bereitstellung des Projekts wird eine CloudFront-Domain erstellt.
+2. Gehen Sie zur AWS Management Console und navigieren Sie zu "CloudFront" unter "Networking & Content Delivery".
+3. Suchen Sie die erstellte Distribution und kopieren Sie den Domainnamen (z.B. `d1pqr0eof9iean.cloudfront.net`).
+4. Öffnen Sie einen Webbrowser und geben Sie den kopierten Domainnamen ein, um auf die bereitgestellte HTML-Datei zuzugreifen.
